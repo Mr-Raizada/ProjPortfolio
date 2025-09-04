@@ -1,119 +1,268 @@
+/* Import Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 .about {
-  background: var(--gray-bg-1);
+  background: var(--bg-secondary);
 }
 
 .aboutContent {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 4rem;
-  align-items: start;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
   max-width: 1000px;
   margin: 0 auto;
 }
 
+.aboutTextSection {
+  margin-bottom: 2rem;
+}
+
+.aboutSubtitle {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--apple-blue);
+  padding-bottom: 0.5rem;
+}
+
 .aboutText {
   line-height: 1.8;
-}
-
-.aboutText p {
-  margin-bottom: 1.5rem;
   color: var(--text-secondary);
   font-size: 1.1rem;
+  margin-bottom: 0;
 }
 
-.expandedContent {
-  overflow: hidden;
+.experienceSection,
+.volunteerSection {
+  margin-top: 2rem;
 }
 
-.expandedContent p {
-  margin-bottom: 1.5rem;
+.experienceTitle,
+.volunteerTitle {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0 0 1.5rem;
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--apple-blue);
+  padding-bottom: 0.5rem;
 }
 
-.toggleButton {
+.experienceGrid {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: none;
-  border: none;
-  color: var(--apple-blue);
-  font-weight: 500;
-  cursor: pointer;
-  padding: 0.5rem 0;
-  transition: color 0.3s ease;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+  padding: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--apple-blue) transparent;
 }
 
-.toggleButton:hover {
-  color: #0066CC;
+.experienceGrid::-webkit-scrollbar {
+  height: 6px;
 }
 
-.aboutStats {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  padding: 2rem;
-  background: var(--card-bg);
-  border-radius: 12px;
+.experienceGrid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.experienceGrid::-webkit-scrollbar-thumb {
+  background: var(--apple-blue);
+  border-radius: 3px;
+}
+
+.experienceGrid::-webkit-scrollbar-thumb:hover {
+  background: #0066CC;
+}
+
+.experienceItem {
+  background: var(--bg-primary);
   border: 1px solid var(--border-color);
-  box-shadow: var(--shadow);
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: fit-content;
+  min-width: 320px;
+  flex-shrink: 0;
 }
 
-.statItem {
-  text-align: center;
+.experienceItem:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
 }
 
-.statNumber {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--apple-blue);
+.experienceItem h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
   margin-bottom: 0.5rem;
 }
 
-.statLabel {
-  font-size: 0.9rem;
+.company {
   color: var(--text-secondary);
+  font-size: 1rem;
+  margin-bottom: 1rem;
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+}
+
+.responsibilities {
+  list-style: none;
+  padding-left: 0;
+}
+
+.responsibilities li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.responsibilities li::before {
+  content: "•";
+  color: var(--apple-blue);
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+.volunteerGrid {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+  padding: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--apple-blue) transparent;
+}
+
+.volunteerGrid::-webkit-scrollbar {
+  height: 6px;
+}
+
+.volunteerGrid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.volunteerGrid::-webkit-scrollbar-thumb {
+  background: var(--apple-blue);
+  border-radius: 3px;
+}
+
+.volunteerGrid::-webkit-scrollbar-thumb:hover {
+  background: #0066CC;
+}
+
+.volunteerItem {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  height: fit-content;
+  min-width: 300px;
+  flex-shrink: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.volunteerItem:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.volunteerItem h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.location {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.volunteerDescription {
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
 }
 
 @media (max-width: 968px) {
   .aboutContent {
-    grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2.5rem;
   }
 
-  .aboutStats {
-    flex-direction: row;
-    justify-content: space-around;
-    padding: 1.5rem;
+  .aboutSubtitle {
+    font-size: 1.5rem;
   }
 
-  .statItem {
-    flex: 1;
+  .experienceTitle,
+  .volunteerTitle {
+    font-size: 1.5rem;
   }
 }
 
 @media (max-width: 768px) {
-  .aboutStats {
-    flex-direction: column;
-    gap: 1.5rem;
+  .aboutContent {
+    gap: 2rem;
   }
 
-  .statNumber {
-    font-size: 2rem;
+  .aboutSubtitle {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .experienceTitle,
+  .volunteerTitle {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .aboutText {
+    font-size: 1rem;
   }
 }
 
 @media (max-width: 480px) {
   .aboutContent {
-    gap: 2rem;
+    gap: 1.5rem;
   }
 
-  .aboutText p {
-    font-size: 1rem;
+  .aboutSubtitle {
+    font-size: 1.25rem;
   }
 
-  .statNumber {
-    font-size: 1.75rem;
+  .experienceTitle,
+  .volunteerTitle {
+    font-size: 1.25rem;
+  }
+
+  .aboutText {
+    font-size: 0.95rem;
+  }
+
+  .experienceGrid,
+  .volunteerGrid {
+    flex-direction: column;
+    gap: 1rem;
+    overflow-x: visible;
+  }
+
+  .experienceItem,
+  .volunteerItem {
+    min-width: auto;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .company,
+  .location,
+  .volunteerDescription,
+  .responsibilities li {
+    font-size: 0.85rem;
   }
 }

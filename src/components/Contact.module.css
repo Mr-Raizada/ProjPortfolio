@@ -43,32 +43,60 @@
   gap: 1rem;
 }
 
+.socialLinks {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.socialLinks h4 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.socialIcons {
+  display: flex;
+  gap: 1rem;
+}
+
 .socialLink {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
+  justify-content: center;
+  padding: 0.75rem;
+  background: var(--bg-primary);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
   color: var(--text-primary);
   text-decoration: none;
   transition: all 0.3s ease;
   font-weight: 500;
+  min-width: 50px;
+  min-height: 50px;
 }
 
 .socialLink:hover {
   background: var(--apple-blue);
   color: white;
   border-color: var(--apple-blue);
+  transform: translateY(-2px);
 }
 
 .contactForm {
-  background: var(--card-bg);
-  padding: 2rem;
+  background: var(--bg-primary);
+  padding: 2.5rem;
   border-radius: 16px;
   border: 1px solid var(--border-color);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-md);
+}
+
+.formTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .formGroup {
@@ -85,13 +113,50 @@
 .formGroup input,
 .formGroup textarea {
   width: 100%;
-  padding: 0.75rem;
+  padding: 1rem;
   border: 2px solid var(--border-color);
-  border-radius: 8px;
-  background: var(--background);
+  border-radius: 12px;
+  background: var(--bg-secondary);
   color: var(--text-primary);
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
   font-family: inherit;
+  font-size: 1rem;
+  min-height: 54px; /* Better touch target for mobile */
+  -webkit-appearance: none; /* Remove iOS styling */
+  appearance: none;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: var(--apple-blue);
+  box-shadow: 0 0 0 3px rgba(var(--apple-blue-rgb), 0.1);
+  transform: translateY(-1px);
+  background: var(--bg-primary);
+}
+
+/* Improve mobile form experience */
+/* Note: inputmode and autocapitalize are HTML attributes, not CSS properties */
+/* These should be set directly in the HTML/JSX elements */
+
+.formGroup textarea {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* Placeholder styling */
+.formGroup input::placeholder,
+.formGroup textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+/* Focus state for accessibility */
+.formGroup input:focus-visible,
+.formGroup textarea:focus-visible {
+  outline: 2px solid var(--apple-blue);
+  outline-offset: 2px;
 }
 
 .formGroup input:focus,
@@ -125,6 +190,23 @@
   background: #0066CC;
 }
 
+/* Desktop enhancements */
+@media (min-width: 1200px) {
+  .contactContent {
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  
+  .contactForm {
+    padding: 3rem;
+  }
+  
+  .formGroup {
+    margin-bottom: 2rem;
+  }
+}
+
 @media (max-width: 968px) {
   .contactContent {
     grid-template-columns: 1fr;
@@ -141,8 +223,12 @@
     align-items: center;
   }
   
-  .socialLinks {
+  .socialIcons {
     justify-content: center;
+  }
+  
+  .declaration {
+    text-align: center;
   }
 }
 

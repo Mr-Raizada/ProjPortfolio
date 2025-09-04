@@ -1,185 +1,152 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Cloud, 
-  Code, 
-  Database, 
-  BarChart3, 
-  Cpu, 
-  FileSpreadsheet,
-  Brain,
-  GitBranch
+import {
+  Code, Database, BarChart3, Layout,
+  Cpu, Zap, Code2, FileSpreadsheet,
+  Table, Palette, Network, GitBranch
 } from 'lucide-react';
 import styles from './Skills.module.css';
 
-const Skills = () => {
-  const [activeCategory, setActiveCategory] = useState('all');
+// Icon mapping for skills
+const skillIcons = {
+  'Python': Code,
+  'R': BarChart3,
+  'Excel': FileSpreadsheet,
+  'Statistical Modeling': BarChart3,
+  'Data Storytelling': Database,
+  'Tableau': Table,
+  'Data Visualization': Palette,
+  'Dashboard Design': Layout,
+  'Interactive Reports': BarChart3,
+  'HTML': Code2,
+  'CSS': Palette,
+  'React (Basic)': Code2,
+  'Responsive Design': Layout,
+  'Process Automation': Zap,
+  'Quality Systems': Cpu,
+  'Data Analysis': Database,
+  'Process Optimization': GitBranch
+};
 
-  const skillsData = [
+const Skills = () => {
+  const skillCategories = [
     {
-      id: 1,
-      name: 'AWS',
-      category: 'cloud',
-      icon: <Cloud size={32} />,
-      proficiency: 90,
-      description: 'Amazon Web Services including EC2, S3, Lambda, and CloudFormation'
+      title: 'Programming & Analysis',
+      skills: [
+        { name: 'Python', level: 85 },
+        { name: 'R', level: 80 },
+        { name: 'Excel', level: 90 },
+        { name: 'Statistical Modeling', level: 85 },
+        { name: 'Data Storytelling', level: 88 }
+      ]
     },
     {
-      id: 2,
-      name: 'Python',
-      category: 'programming',
-      icon: <Code size={32} />,
-      proficiency: 95,
-      description: 'Advanced Python programming with pandas, numpy, and scikit-learn'
+      title: 'Data Visualization',
+      skills: [
+        { name: 'Tableau', level: 90 },
+        { name: 'Data Visualization', level: 85 },
+        { name: 'Dashboard Design', level: 88 },
+        { name: 'Interactive Reports', level: 82 }
+      ]
     },
     {
-      id: 3,
-      name: 'SQL',
-      category: 'programming',
-      icon: <Database size={32} />,
-      proficiency: 92,
-      description: 'Advanced SQL queries, database design, and optimization'
+      title: 'Web Technologies',
+      skills: [
+        { name: 'HTML', level: 75 },
+        { name: 'CSS', level: 70 },
+        { name: 'React (Basic)', level: 60 },
+        { name: 'Responsive Design', level: 75 }
+      ]
     },
     {
-      id: 4,
-      name: 'Tableau',
-      category: 'analytics',
-      icon: <BarChart3 size={32} />,
-      proficiency: 88,
-      description: 'Data visualization and interactive dashboard creation'
-    },
-    {
-      id: 5,
-      name: 'Automation',
-      category: 'tools',
-      icon: <Cpu size={32} />,
-      proficiency: 93,
-      description: 'Custom automation frameworks and workflow optimization'
-    },
-    {
-      id: 6,
-      name: 'Excel',
-      category: 'analytics',
-      icon: <FileSpreadsheet size={32} />,
-      proficiency: 96,
-      description: 'Advanced Excel functions, pivot tables, and data analysis'
-    },
-    {
-      id: 7,
-      name: 'LLM',
-      category: 'tools',
-      icon: <Brain size={32} />,
-      proficiency: 85,
-      description: 'Large Language Model integration and AI-powered solutions'
-    },
-    {
-      id: 8,
-      name: 'Git',
-      category: 'tools',
-      icon: <GitBranch size={32} />,
-      proficiency: 91,
-      description: 'Version control and collaborative development workflows'
+      title: 'Cloud & Automation',
+      skills: [
+        { name: 'Process Automation', level: 80 },
+        { name: 'Quality Systems', level: 85 },
+        { name: 'Data Analysis', level: 88 },
+        { name: 'Process Optimization', level: 82 }
+      ]
     }
   ];
 
-  const categories = [
-    { id: 'all', label: 'All Skills' },
-    { id: 'cloud', label: 'Cloud' },
-    { id: 'programming', label: 'Programming' },
-    { id: 'analytics', label: 'Analytics' },
-    { id: 'tools', label: 'Tools' }
-  ];
-
-  const filteredSkills = activeCategory === 'all' 
-    ? skillsData 
-    : skillsData.filter(skill => skill.category === activeCategory);
-
   const fadeInUp = {
     hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
   };
 
   const staggerChildren = {
     visible: {
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: 0.2
       }
     }
   };
 
   return (
-    <section id="skills" className={`section ${styles.skills}`}>
+    <section id="skills" className={styles.skills}>
       <div className="container">
         <motion.h2 
           className="section-title"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          variants={fadeInUp}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
         >
-          Skills & Technologies
+          Skills & Tools
         </motion.h2>
 
-        {/* Category Filter */}
-        <motion.div
-          className={styles.categoryFilter}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          variants={fadeInUp}
-        >
-          {categories.map(category => (
-            <button
-              key={category.id}
-              className={`${styles.categoryButton} ${
-                activeCategory === category.id ? styles.active : ''
-              }`}
-              onClick={() => setActiveCategory(category.id)}
-            >
-              {category.label}
-            </button>
-          ))}
-        </motion.div>
-
-        {/* Skills Grid */}
-        <motion.div
+        <motion.div 
           className={styles.skillsGrid}
-          variants={staggerChildren}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true }}
+          variants={staggerChildren}
         >
-          {filteredSkills.map((skill) => (
+          {skillCategories.map((category, categoryIndex) => (
             <motion.div
-              key={skill.id}
-              className={styles.skillCard}
+              key={categoryIndex}
+              className={styles.skillCategory}
               variants={fadeInUp}
-              whileHover={{ y: -5 }}
-              transition={{ duration: 0.2 }}
             >
-              <div className={styles.skillIcon}>
-                {skill.icon}
-              </div>
-              
-              <h3 className={styles.skillName}>{skill.name}</h3>
-              
-              <div className={styles.proficiencyBar}>
-                <div 
-                  className={styles.proficiencyFill}
-                  style={{ width: `${skill.proficiency}%` }}
-                />
-              </div>
-              
-              <div className={styles.proficiencyText}>
-                {skill.proficiency}% Proficiency
-              </div>
-              
-              <div className={styles.skillTooltip}>
-                {skill.description}
+              <h3 className={styles.categoryTitle}>{category.title}</h3>
+              <div className={styles.skillsList}>
+                {category.skills.map((skill, skillIndex) => {
+                  const IconComponent = skillIcons[skill.name] || BarChart3;
+                  return (
+                    <motion.div
+                      key={skillIndex}
+                      className={styles.skillItem}
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <div className={styles.skillHeader}>
+                        <div className={styles.skillIconName}>
+                          <IconComponent size={18} className={styles.skillIcon} />
+                          <span className={styles.skillName}>{skill.name}</span>
+                        </div>
+                        <span className={styles.skillPercentage}>{skill.level}%</span>
+                      </div>
+                      <div className={styles.progressBar}>
+                        <motion.div
+                          className={styles.progressFill}
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${skill.level}%` }}
+                          viewport={{ once: true }}
+                          transition={{
+                            duration: 1.5,
+                            ease: "easeOut",
+                            delay: categoryIndex * 0.1 + skillIndex * 0.05
+                          }}
+                        />
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </div>
             </motion.div>
           ))}
         </motion.div>
+
       </div>
     </section>
   );

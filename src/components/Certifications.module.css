@@ -1,129 +1,462 @@
 .certifications {
-  background: var(--pure-white);
+  background: var(--bg-secondary);
+  position: relative;
+  overflow: hidden;
 }
 
-.certificationsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
+.carousel {
+  position: relative;
+  margin: 3rem 0;
 }
 
-.certificationCard {
-  background: var(--card-bg);
-  padding: 2rem;
-  border-radius: 16px;
+.carouselContainer {
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--bg-primary);
   border: 1px solid var(--border-color);
-  transition: all 0.3s ease;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-lg);
+}
+
+.carouselTrack {
+  display: flex;
+  transition: transform 0.5s ease;
+  will-change: transform;
+}
+
+.carouselSlide {
+  flex: 0 0 100%;
+  min-width: 100%;
+  padding: 2rem;
+  opacity: 0.3;
+  transition: opacity 0.5s ease;
+}
+
+.carouselSlide:hover {
+  opacity: 1 !important;
+}
+
+.certCard {
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--gray-bg-1) 100%);
+  padding: 3rem 2.5rem;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  text-align: center;
+  position: relative;
+  transition: all 0.4s ease;
+  box-shadow: var(--shadow-md);
+  height: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.certificationCard:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-hover);
+.certCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--apple-blue);
+}
+
+.certCard.education {
+  background: linear-gradient(135deg, rgba(0, 113, 227, 0.05) 0%, rgba(0, 113, 227, 0.1) 100%);
+  border-left: 4px solid var(--apple-blue);
+}
+
+.certCard.certification {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.05) 0%, rgba(76, 175, 80, 0.1) 100%);
+  border-left: 4px solid #4CAF50;
 }
 
 .certIcon {
-  color: var(--apple-blue);
   margin-bottom: 1.5rem;
   display: flex;
   justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, var(--apple-blue), #0066CC);
+  border-radius: 50%;
+  color: white;
+  padding: 1rem;
+  box-shadow: var(--shadow-md);
+}
+
+.certCard.certification .certIcon {
+  background: linear-gradient(135deg, #4CAF50, #388E3C);
 }
 
 .certContent {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.certContent h3 {
+.certTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+  margin: 0;
+}
+
+.certInstitution {
+  color: var(--apple-blue);
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.certCard.certification .certInstitution {
+  color: #4CAF50;
+}
+
+.certPeriod {
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.certDescription {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin: 1rem 0 0 0;
+}
+
+.certBadge {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.certCard.education .certBadge {
+  background: var(--apple-blue);
+  color: white;
+}
+
+.certCard.certification .certBadge {
+  background: #4CAF50;
+  color: white;
+}
+
+.carouselControls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.controlButton {
+  background: var(--bg-primary);
+  border: 2px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 0.75rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 50px;
+  min-height: 50px;
+}
+
+.controlButton:hover {
+  background: var(--apple-blue);
+  border-color: var(--apple-blue);
+  color: white;
+  transform: scale(1.1);
+}
+
+.carouselDots {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--border-color);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot:hover {
+  background: var(--apple-blue);
+  border-color: var(--apple-blue);
+}
+
+.activeDot {
+  background: var(--apple-blue);
+  border-color: var(--apple-blue);
+  transform: scale(1.2);
+}
+
+/* Education List Styles */
+.educationList {
+  margin-top: 4rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.listTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.listTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: var(--apple-blue);
+  border-radius: 2px;
+}
+
+.timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 30px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--apple-blue);
+  opacity: 0.3;
+}
+
+.timelineItem {
+  display: flex;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.timelineMarker {
+  width: 60px;
+  height: 60px;
+  background: var(--apple-blue);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-right: 2rem;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+  box-shadow: var(--shadow-md);
+}
+
+.timelineContent {
+  flex: 1;
+  background: var(--bg-primary);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.timelineContent:hover {
+  transform: translateX(5px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--apple-blue);
+}
+
+.timelineContent h4 {
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 0.5rem;
-  text-align: center;
 }
 
-.issuer {
+.timelineInstitution {
   color: var(--apple-blue);
   font-weight: 500;
-  text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.timelinePeriod {
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-bottom: 0.75rem;
   font-size: 0.9rem;
 }
 
-.description {
+.timelineContent p:last-child {
   color: var(--text-secondary);
   line-height: 1.6;
-  margin-bottom: 1.5rem;
-  text-align: center;
+  font-size: 0.95rem;
+  margin: 0;
 }
 
-.certMeta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  background: var(--gray-bg-1);
-  border-radius: 8px;
-}
-
-.metaItem {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-}
-
-.verifyButton {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  background: var(--apple-blue);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  font-weight: 500;
-  width: 100%;
-  justify-content: center;
-}
-
-.verifyButton:hover {
-  background: #0066CC;
-}
-
-@media (max-width: 768px) {
-  .certificationsGrid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+/* Desktop Enhancements */
+@media (min-width: 1024px) {
+  .carouselContainer {
+    margin: 0 2rem;
   }
   
-  .certificationCard {
+  .certCard {
+    padding: 3.5rem 3rem;
+  }
+  
+  .certTitle {
+    font-size: 1.75rem;
+  }
+  
+  .timeline {
+    max-width: 900px;
+  }
+}
+
+/* Tablet Styles */
+@media (max-width: 768px) {
+  .carouselSlide {
     padding: 1.5rem;
   }
   
-  .certMeta {
+  .certCard {
+    padding: 2.5rem 2rem;
+  }
+  
+  .certTitle {
+    font-size: 1.25rem;
+  }
+  
+  .certIcon {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .timelineItem {
     flex-direction: column;
-    gap: 0.5rem;
     align-items: flex-start;
+  }
+  
+  .timelineMarker {
+    margin-bottom: 1rem;
+    margin-right: 0;
+  }
+  
+  .timeline::before {
+    left: 30px;
   }
 }
 
+/* Mobile Styles */
 @media (max-width: 480px) {
-  .certContent h3 {
+  .carouselSlide {
+    padding: 1rem;
+  }
+  
+  .certCard {
+    padding: 2rem 1.5rem;
+  }
+  
+  .certTitle {
     font-size: 1.1rem;
   }
   
-  .description {
+  .certInstitution {
+    font-size: 0.95rem;
+  }
+  
+  .certDescription {
     font-size: 0.9rem;
   }
   
-  .metaItem {
-    font-size: 0.8rem;
+  .certBadge {
+    top: 1rem;
+    right: 1rem;
+    font-size: 0.7rem;
+    padding: 0.375rem 0.75rem;
   }
+  
+  .carouselControls {
+    gap: 1.5rem;
+  }
+  
+  .controlButton {
+    min-width: 40px;
+    min-height: 40px;
+    padding: 0.5rem;
+  }
+  
+  .timelineContent {
+    padding: 1.25rem;
+  }
+  
+  .timelineContent h4 {
+    font-size: 1.1rem;
+  }
+}
+
+/* Animation Enhancements */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.carouselSlide {
+  animation: slideIn 0.6s ease-out;
+}
+
+.certCard {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.timelineItem {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .certCard {
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+}
+
+[data-theme="dark"] .certCard:hover {
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--gray-bg-1) 100%);
 }

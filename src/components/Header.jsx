@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Moon, Sun, Menu, X } from 'lucide-react';
 import styles from './Header.module.css';
 
@@ -7,6 +8,8 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,20 +20,78 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  useEffect(() => {
+    // Prevent body scroll when mobile menu is open
+    if (isMobileMenuOpen) {
+      document.body.classList.add('mobile-menu-open');
+      document.documentElement.style.overflow = 'hidden';
+    } else {
+      document.body.classList.remove('mobile-menu-open');
+      document.documentElement.style.overflow = '';
+    }
+
+    return () => {
+      document.body.classList.remove('mobile-menu-open');
+      document.documentElement.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
+  // Close mobile menu when clicking outside or pressing escape
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isMobileMenuOpen && !event.target.closest(`.${styles.mobileNav}`) &&
+          !event.target.closest(`.${styles.mobileMenuBtn}`)) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    const handleEscape = (event) => {
+      if (isMobileMenuOpen && event.key === 'Escape') {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [isMobileMenuOpen, styles.mobileNav, styles.mobileMenuBtn]);
+
+  const navigateToSection = (path) => {
+    if (path === '/') {
+      navigate('/');
+    } else if (path === '/resume') {
+      navigate('/resume');
+    } else if (location.pathname === '/') {
+      // If we're on home page, scroll to section
+      const element = document.getElementById(path.replace('/', ''));
+      if (element) {
+        element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    } else {
+      // If we're on resume page, navigate to home and scroll to section
+      navigate(`/#${path}`);
     }
     setIsMobileMenuOpen(false);
   };
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   const navItems = [
-    { id: 'home', label: 'Home' },
+    { id: '/', label: 'Home' },
     { id: 'about', label: 'About' },
     { id: 'skills', label: 'Skills' },
     { id: 'projects', label: 'Projects' },
     { id: 'certifications', label: 'Certifications' },
+    { id: '/resume', label: 'Resume' },
     { id: 'contact', label: 'Contact' }
   ];
 
@@ -39,21 +100,31 @@ const Header = () => {
       <div className="container">
         <div className={styles.headerContent}>
           {/* Logo */}
-          <div className={styles.logo} onClick={() => scrollToSection('home')}>
+          <Link to="/" className={styles.logo}>
             <span className={styles.logoText}>VS</span>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className={styles.navDesktop}>
             <ul className={styles.navList}>
               {navItems.map((item) => (
                 <li key={item.id}>
-                  <button
-                    onClick={() => scrollToSection(item.id)}
-                    className={styles.navLink}
-                  >
-                    {item.label}
-                  </button>
+                  {item.id.startsWith('/') ? (
+                    <Link
+                      to={item.id}
+                      className={styles.navLink}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={() => navigateToSection(item.id)}
+                      className={styles.navLink}
+                    >
+                      {item.label}
+                    </button>
+                  )}
                 </li>
               ))}
             </ul>
@@ -83,12 +154,22 @@ const Header = () => {
           <ul className={styles.mobileNavList}>
             {navItems.map((item) => (
               <li key={item.id}>
-                <button
-                  onClick={() => scrollToSection(item.id)}
-                  className={styles.mobileNavLink}
-                >
-                  {item.label}
-                </button>
+                {item.id.startsWith('/') ? (
+                  <Link
+                    to={item.id}
+                    className={styles.mobileNavLink}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <button
+                    onClick={() => navigateToSection(item.id)}
+                    className={styles.mobileNavLink}
+                  >
+                    {item.label}
+                  </button>
+                )}
               </li>
             ))}
           </ul>
