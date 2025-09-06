@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, Linkedin, Github, FileText } from 'lucide-react';
-import emailjs from '@emailjs/browser';
 import styles from './Contact.module.css';
 
 const Contact = () => {
@@ -23,47 +22,26 @@ const Contact = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
     
-    try {
-      // EmailJS configuration - you'll need to set up an account at https://www.emailjs.com/
-      // and replace these with your actual service ID, template ID, and public key
-      const serviceId = 'YOUR_SERVICE_ID'; // Replace with your EmailJS service ID
-      const templateId = 'YOUR_TEMPLATE_ID'; // Replace with your EmailJS template ID
-      const publicKey = 'YOUR_PUBLIC_KEY'; // Replace with your EmailJS public key
-      
-      // Send email using EmailJS
-      const result = await emailjs.send(
-        serviceId,
-        templateId,
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-          to_email: 'unhindered.passion@gmail.com'
-        },
-        publicKey
-      );
-      
-      setIsSubmitting(false);
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      
-      // Clear success message after 5 seconds
-      setTimeout(() => setSubmitStatus(null), 5000);
-      
-      console.log('Email sent successfully:', result);
-    } catch (error) {
-      setIsSubmitting(false);
-      setSubmitStatus('error');
-      console.error('Error sending email:', error);
-      
-      // Clear error message after 5 seconds
-      setTimeout(() => setSubmitStatus(null), 5000);
-    }
+    // Create mailto link with form data
+    const subject = encodeURIComponent(formData.subject);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    );
+    
+    const mailtoLink = `mailto:unhindered.passion@gmail.com?subject=${subject}&body=${body}`;
+    
+    // Open email client
+    window.location.href = mailtoLink;
+    
+    // Show success message and reset form
+    setSubmitStatus('success');
+    setFormData({ name: '', email: '', subject: '', message: '' });
+    
+    // Clear success message after 5 seconds
+    setTimeout(() => setSubmitStatus(null), 5000);
   };
 
   const fadeInUp = {
@@ -237,10 +215,9 @@ const Contact = () => {
 
               <button
                 type="submit"
-                disabled={isSubmitting}
                 className={`btn-primary ${styles.submitButton}`}
               >
-                {isSubmitting ? 'Sending...' : 'Send Message'}
+                Open Email
               </button>
 
               {submitStatus === 'success' && (

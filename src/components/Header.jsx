@@ -63,8 +63,10 @@ const Header = () => {
   const navigateToSection = (path) => {
     if (path === '/') {
       navigate('/');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (path === '/resume') {
       navigate('/resume');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (location.pathname === '/') {
       // If we're on home page, scroll to section
       const element = document.getElementById(path.replace('/', ''));
@@ -76,10 +78,30 @@ const Header = () => {
       }
     } else {
       // If we're on resume page, navigate to home and scroll to section
-      navigate(`/#${path}`);
+      navigate('/', {
+        state: { scrollTo: path },
+        replace: true
+      });
     }
     setIsMobileMenuOpen(false);
   };
+
+  // Handle scroll after navigation
+  useEffect(() => {
+    if (location.state?.scrollTo) {
+      const element = document.getElementById(location.state.scrollTo.replace('/', ''));
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+          // Clear the scroll state to prevent repeated scrolling
+          navigate(location.pathname, { replace: true, state: {} });
+        }, 100);
+      }
+    }
+  }, [location.state, navigate, location.pathname]);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);

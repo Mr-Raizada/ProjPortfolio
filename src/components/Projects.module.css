@@ -16,6 +16,9 @@
   transition: all 0.3s ease;
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  min-height: 400px; /* Consistent minimum height */
 }
 
 .projectCard:hover {
@@ -53,6 +56,9 @@
 
 .projectInfo {
   padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .projectTitle {
@@ -95,7 +101,8 @@
   border-radius: 10px;
   font-size: 0.75rem;
   font-weight: 500;
-  margin-top: 0.75rem;
+  margin-top: auto; /* Push category to bottom */
+  align-self: flex-start;
 }
 
 .projectActions {
@@ -202,5 +209,265 @@
   
   .projectInfo {
     padding: 1rem;
+  }
+}
+
+/* Project Modal Styles */
+.projectModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+}
+
+.modalContent {
+  background: var(--bg-primary);
+  border-radius: 16px;
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-color);
+  position: relative;
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-md);
+}
+
+.closeButton:hover {
+  background: var(--apple-blue);
+  color: white;
+  transform: scale(1.1);
+}
+
+.modalHeader {
+  padding: 2rem 2rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.modalHeader h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.modalCategory {
+  color: var(--text-muted);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.modalBody {
+  padding: 2rem;
+}
+
+.modalBody img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-md);
+}
+
+.modalDescription {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.modalTech h4,
+.modalSection h4 {
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.techList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.modalLinks {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+/* Project Modal Enhancements */
+.modalContentSections {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.modalSection {
+  padding: 1.5rem;
+  background: var(--gray-bg-1);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.modalSection h4 {
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.featuresList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.featuresList li {
+  padding: 0.5rem 0;
+  color: var(--text-secondary);
+  position: relative;
+  padding-left: 1.5rem;
+  line-height: 1.5;
+}
+
+.featuresList li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--apple-blue);
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* Responsive modal adjustments */
+@media (max-width: 768px) {
+  .projectModal {
+    padding: 0.5rem;
+  }
+  
+  .modalContent {
+    max-height: 95vh;
+    border-radius: 12px;
+  }
+  
+  .modalHeader {
+    padding: 1.5rem 1.5rem 1rem;
+  }
+  
+  .modalHeader h3 {
+    font-size: 1.5rem;
+  }
+  
+  .modalBody {
+    padding: 1.5rem;
+  }
+  
+  .modalBody img {
+    height: 200px;
+  }
+  
+  .closeButton {
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 40px;
+    height: 40px;
+  }
+  
+  .modalContentSections {
+    gap: 1rem;
+  }
+  
+  .modalSection {
+    padding: 1rem;
+  }
+  
+  .modalSection h4 {
+    font-size: 1rem;
+  }
+  
+  .modalLinks {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .modalLinks a {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .modalHeader {
+    padding: 1.25rem 1.25rem 0.75rem;
+  }
+  
+  .modalHeader h3 {
+    font-size: 1.25rem;
+  }
+  
+  .modalBody {
+    padding: 1.25rem;
+  }
+  
+  .modalBody img {
+    height: 180px;
+  }
+  
+  .modalDescription {
+    font-size: 1rem;
+  }
+  
+  .modalContentSections {
+    gap: 0.75rem;
+  }
+  
+  .modalSection {
+    padding: 0.75rem;
+  }
+  
+  .featuresList li {
+    padding: 0.375rem 0;
+    padding-left: 1.25rem;
+    font-size: 0.9rem;
+  }
+  
+  .closeButton {
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 36px;
+    height: 36px;
   }
 }
